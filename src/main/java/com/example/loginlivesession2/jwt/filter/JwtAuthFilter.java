@@ -33,20 +33,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 jwtExceptionHandler(response, "AccessToken Expired", HttpStatus.BAD_REQUEST);
                 return;
             }
-            setAuthentication(jwtUtil.getEmailFromToken(accessToken));
+            setAuthentication(jwtUtil.getLoginIdFromToken(accessToken));
         }else if(refreshToken != null) {
             if(!jwtUtil.refreshTokenValidation(refreshToken)){
                 jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
                 return;
             }
-            setAuthentication(jwtUtil.getEmailFromToken(refreshToken));
+            setAuthentication(jwtUtil.getLoginIdFromToken(refreshToken));
         }
 
         filterChain.doFilter(request,response);
     }
 
-    public void setAuthentication(String email) {
-        Authentication authentication = jwtUtil.createAuthentication(email);
+    public void setAuthentication(String loginId) {
+        Authentication authentication = jwtUtil.createAuthentication(loginId);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 

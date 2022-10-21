@@ -7,19 +7,21 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
-public class AccountReqDto {
+public class AccountRequestDto {
 
     @NotBlank
-    private String email;
+    private String loginId;
+
     @NotBlank
     private String password;
-    @NotBlank
-    private String phoneNumber;
 
-    public AccountReqDto(String email, String password, String phoneNumber) {
-        this.email = email;
+    @NotBlank
+    private String username;
+
+    public AccountRequestDto(String loginId, String password, String username) {
+        this.loginId = loginId;
         this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.username = username;
     }
 
     public void setEncodePwd(String encodePwd) {

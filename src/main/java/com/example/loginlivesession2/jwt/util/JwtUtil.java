@@ -54,18 +54,18 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public TokenDto createAllToken(String email) {
-        return new TokenDto(createToken(email, "Access"), createToken(email, "Refresh"));
+    public TokenDto createAllToken(String loginId) {
+        return new TokenDto(createToken(loginId, "Access"), createToken(loginId, "Refresh"));
     }
 
-    public String createToken(String email, String type) {
+    public String createToken(String loginId, String type) {
 
         Date date = new Date();
 
         long time = type.equals("Access") ? ACCESS_TIME : REFRESH_TIME;
 
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(loginId)
                 .setExpiration(new Date(date.getTime() + time))
                 .setIssuedAt(date)
                 .signWith(key, signatureAlgorithm)
@@ -91,19 +91,19 @@ public class JwtUtil {
         if(!tokenValidation(token)) return false;
 
         // DB에 저장한 토큰 비교
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountEmail(getEmailFromToken(token));
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountLoginId(getLoginIdFromToken(token));
 
         return refreshToken.isPresent() && token.equals(refreshToken.get().getRefreshToken());
     }
 
     // 인증 객체 생성
-    public Authentication createAuthentication(String email) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+    public Authentication createAuthentication(String loginId) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginId);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 email 가져오는 기능
-    public String getEmailFromToken(String token) {
+    public String getLoginIdFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
