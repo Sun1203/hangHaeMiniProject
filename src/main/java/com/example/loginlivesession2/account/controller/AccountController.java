@@ -1,7 +1,7 @@
 package com.example.loginlivesession2.account.controller;
 
-import com.example.loginlivesession2.account.dto.AccountReqDto;
-import com.example.loginlivesession2.account.dto.LoginReqDto;
+import com.example.loginlivesession2.account.dto.AccountRequestDto;
+import com.example.loginlivesession2.account.dto.LoginRequestDto;
 import com.example.loginlivesession2.account.service.AccountService;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
@@ -15,26 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+
 @RequiredArgsConstructor
 public class AccountController {
 
     private final JwtUtil jwtUtil;
     private final AccountService accountService;
 
-    @PostMapping("/account/signup")
-    public GlobalResDto signup(@RequestBody @Valid AccountReqDto accountReqDto) {
+    @PostMapping("/signup")
+    public GlobalResDto signup(@RequestBody @Valid AccountRequestDto accountReqDto) {
+        System.out.println("AccountController.signup");
         return accountService.signup(accountReqDto);
     }
 
-    @PostMapping("/account/login")
-    public GlobalResDto login(@RequestBody @Valid LoginReqDto loginReqDto, HttpServletResponse response) {
-        return accountService.login(loginReqDto, response);
+    @PostMapping("/login")
+    public GlobalResDto login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        return accountService.login(loginRequestDto, response);
     }
 
-    @GetMapping("/issue/token")
+    @GetMapping("/api/issue/token")
     public GlobalResDto issuedToken(@AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response){
-        response.addHeader(JwtUtil.ACCESS_TOKEN, jwtUtil.createToken(userDetails.getAccount().getEmail(), "Access"));
+        response.addHeader(JwtUtil.ACCESS_TOKEN, jwtUtil.createToken(userDetails.getAccount().getUsername(), "Access"));
         return new GlobalResDto("Success IssuedToken", HttpStatus.OK.value());
     }
 

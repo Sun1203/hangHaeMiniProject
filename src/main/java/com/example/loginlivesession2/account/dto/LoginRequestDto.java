@@ -7,15 +7,15 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
-public class LoginReqDto {
+public class LoginRequestDto {
 
     @NotBlank
-    private String email;
+    private String loginId;
     @NotBlank
     private String password;
 
-    public LoginReqDto(String email, String password) {
-        this.email = email;
+    public LoginRequestDto(String loginId, String password) {
+        this.loginId = loginId;
         this.password = password;
     }
 

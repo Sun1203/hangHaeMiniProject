@@ -1,7 +1,7 @@
 package com.example.loginlivesession2.account.service;
 
-import com.example.loginlivesession2.account.dto.AccountReqDto;
-import com.example.loginlivesession2.account.dto.LoginReqDto;
+import com.example.loginlivesession2.account.dto.AccountRequestDto;
+import com.example.loginlivesession2.account.dto.LoginRequestDto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
 import com.example.loginlivesession2.account.repository.AccountRepository;
@@ -28,38 +28,38 @@ public class AccountService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public GlobalResDto signup(AccountReqDto accountReqDto) {
+    public GlobalResDto signup(AccountRequestDto accountRequestDto) {
         // email 중복 검사
-        if(accountRepository.findByEmail(accountReqDto.getEmail()).isPresent()){
+        if(accountRepository.findByLoginId(accountRequestDto.getLoginId()).isPresent()){
             throw new RuntimeException("Overlap Check");
         }
 
-        accountReqDto.setEncodePwd(passwordEncoder.encode(accountReqDto.getPassword()));
-        Account account = new Account(accountReqDto);
+        accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
+        Account account = new Account(accountRequestDto);
 
         accountRepository.save(account);
         return new GlobalResDto("Success signup", HttpStatus.OK.value());
     }
 
     @Transactional
-    public GlobalResDto login(LoginReqDto loginReqDto, HttpServletResponse response) {
+    public GlobalResDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
-        Account account = accountRepository.findByEmail(loginReqDto.getEmail()).orElseThrow(
+        Account account = accountRepository.findByLoginId(loginRequestDto.getLoginId()).orElseThrow(
                 () -> new RuntimeException("Not found Account")
         );
 
-        if(!passwordEncoder.matches(loginReqDto.getPassword(), account.getPassword())) {
+        if(!passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())) {
             throw new RuntimeException("Not matches Password");
         }
 
-        TokenDto tokenDto = jwtUtil.createAllToken(loginReqDto.getEmail());
+        TokenDto tokenDto = jwtUtil.createAllToken(loginRequestDto.getLoginId());
 
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountEmail(loginReqDto.getEmail());
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountLoginId(loginRequestDto.getLoginId());
 
         if(refreshToken.isPresent()) {
             refreshTokenRepository.save(refreshToken.get().updateToken(tokenDto.getRefreshToken()));
         }else {
-            RefreshToken newToken = new RefreshToken(tokenDto.getRefreshToken(), loginReqDto.getEmail());
+            RefreshToken newToken = new RefreshToken(tokenDto.getRefreshToken(), loginRequestDto.getLoginId());
             refreshTokenRepository.save(newToken);
         }
 
