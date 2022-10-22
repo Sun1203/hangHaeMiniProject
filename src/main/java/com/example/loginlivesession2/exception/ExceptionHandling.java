@@ -11,5 +11,4 @@ public class ExceptionHandling {
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
-
 }

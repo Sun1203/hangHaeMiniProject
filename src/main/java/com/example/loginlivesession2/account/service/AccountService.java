@@ -6,6 +6,8 @@ import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
 import com.example.loginlivesession2.account.repository.AccountRepository;
 import com.example.loginlivesession2.account.repository.RefreshTokenRepository;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
 import com.example.loginlivesession2.global.dto.GlobalResDto;
 import com.example.loginlivesession2.jwt.dto.TokenDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
@@ -31,7 +33,7 @@ public class AccountService {
     public GlobalResDto signup(AccountRequestDto accountRequestDto) {
         // email 중복 검사
         if(accountRepository.findByLoginId(accountRequestDto.getLoginId()).isPresent()){
-            throw new RuntimeException("Overlap Check");
+            throw new CustomException(ErrorCode.NOT_FOUND_MEMBER);
         }
 
         accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
