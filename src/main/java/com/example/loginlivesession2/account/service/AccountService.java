@@ -2,6 +2,7 @@ package com.example.loginlivesession2.account.service;
 
 import com.example.loginlivesession2.account.dto.AccountRequestDto;
 import com.example.loginlivesession2.account.dto.LoginRequestDto;
+import com.example.loginlivesession2.account.dto.ResponseDto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
 import com.example.loginlivesession2.account.repository.AccountRepository;
@@ -30,34 +31,42 @@ public class AccountService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public GlobalResDto signup(AccountRequestDto accountRequestDto) {
-        // email 중복 검사
+    public ResponseDto signup(AccountRequestDto accountRequestDto) {
+
+        // ID 중복 검사
         if(accountRepository.findByLoginId(accountRequestDto.getLoginId()).isPresent()){
-            throw new CustomException(ErrorCode.NOT_FOUND_MEMBER);
+            throw new CustomException(ErrorCode.OVERLAP_LOGINID);
         }
 
+        // 비밀번호 암호화
         accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
         Account account = new Account(accountRequestDto);
 
         accountRepository.save(account);
-        return new GlobalResDto("Success signup", HttpStatus.OK.value());
+        return ResponseDto.success("회원가입 성공");
+//        return new GlobalResDto("Success signup", HttpStatus.OK.value());
     }
 
     @Transactional
-    public GlobalResDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
+        // 아이디 체크
         Account account = accountRepository.findByLoginId(loginRequestDto.getLoginId()).orElseThrow(
-                () -> new RuntimeException("Not found Account")
+                () -> new CustomException(ErrorCode.NOT_MATCHED_LOGINID)
         );
 
+        // 비밀번호 체크
         if(!passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())) {
-            throw new RuntimeException("Not matches Password");
+            throw new CustomException(ErrorCode.NOT_MATCHED_PASSWORD);
         }
 
+        // 아이디를 이용해서  Acess_Token 토큰만들기.
         TokenDto tokenDto = jwtUtil.createAllToken(loginRequestDto.getLoginId());
 
+        // 아이디를 이용해서 Refresh_Token 토큰만들기
         Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountLoginId(loginRequestDto.getLoginId());
 
+        // 리프레쉬 토큰 저장
         if(refreshToken.isPresent()) {
             refreshTokenRepository.save(refreshToken.get().updateToken(tokenDto.getRefreshToken()));
         }else {
@@ -65,10 +74,10 @@ public class AccountService {
             refreshTokenRepository.save(newToken);
         }
 
+        // 헤더에 토큰 저장
         setHeader(response, tokenDto);
 
-        return new GlobalResDto("Success Login", HttpStatus.OK.value());
-
+        return ResponseDto.success("로그인 성공");
     }
 
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
