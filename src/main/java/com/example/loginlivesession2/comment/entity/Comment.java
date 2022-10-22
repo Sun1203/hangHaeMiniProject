@@ -37,4 +37,8 @@ public class Comment {
         this.account = account;
         this.post = post;
     }
+
+    public void update(CommentRequestDto commentRequestDto) {
+        this.comment = commentRequestDto.getComment();
+    }
 }
