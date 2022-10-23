@@ -1,13 +1,21 @@
 package com.example.loginlivesession2.comment.dto;
 
 
-import lombok.AllArgsConstructor;
+import com.example.loginlivesession2.account.entity.Account;
+import com.example.loginlivesession2.comment.entity.Comment;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class CommentResponseDto {
+
     private String username;
-    private String comment;
+    private String content;
+
+    public CommentResponseDto(Comment comment){
+        this.username = comment.getUsername();
+        this.content = comment.getContent();
+    }
 
 }
