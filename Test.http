@@ -7,8 +7,8 @@ POST http://localhost:8080/signup
 Content-Type: application/json
 
 {
-  "loginId": "dlwotjs14",
-  "password": "bin1234",
+  "loginId": "dlwotjs15",
+  "password": "@Qlqjs134",
   "username" : "재선이"
 }
 
@@ -18,6 +18,7 @@ Content-Type: application/json
 
 {
   "loginId": "dlwotjs14",
-  "password": "bin1234"
+  "password": "@Qlqjs134"
 }
 ###
+GET http://localhost:8080/account

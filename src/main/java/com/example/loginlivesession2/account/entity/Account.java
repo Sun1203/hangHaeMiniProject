@@ -18,11 +18,11 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
-    @NotBlank
+
     private String loginId;
-    @NotBlank
+
     private String password;
-    @NotBlank
+
     private String username;
 
     public Account(AccountRequestDto requestDto) {
