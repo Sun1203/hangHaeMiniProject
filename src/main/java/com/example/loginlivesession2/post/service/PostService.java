@@ -2,6 +2,11 @@ package com.example.loginlivesession2.post.service;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.repository.AccountRepository;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
+import com.example.loginlivesession2.heart.entity.Heart;
+import com.example.loginlivesession2.heart.repository.HeartRepository;
+import com.example.loginlivesession2.post.dto.CategoryPostResponseDto;
 import com.example.loginlivesession2.post.dto.PostRequestDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.dto.ResponseDto;
@@ -59,7 +64,8 @@ public class PostService {
         Account account = userDetails.getAccount();
         Post post = new Post(postRequestDto, account);
         postRepository.save(post);
-        return new PostResponseDto(post);
+        Long heart = heartRepository.countByPost(post);
+        return new PostResponseDto(post, heart);
     }
 
 
@@ -67,9 +73,10 @@ public class PostService {
     public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
         Long userId = userDetails.getAccount().getAccountId();
+        Long heart = heartRepository.countByPost(post);
         if (post.getAccount().getAccountId().equals(userId)) {
             post.update(postRequestDto);
-            return new PostResponseDto(post);
+            return new PostResponseDto(post, heart);
         } else {
             throw new RuntimeException("작성자만 수정 가능합니다.");
         }

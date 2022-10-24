@@ -16,11 +16,12 @@ public class PostResponseDto {
     private String title;
     private String category;
     private String image;
+    private Long heart;
     private String content;
 
     private List<Comment> comments;
 
-    public PostResponseDto(Post post){
+    public PostResponseDto(Post post, Long heart){
         this.username = post.getAccount().getUsername();
         this.title = post.getTitle();
         this.category = post.getCategory();
