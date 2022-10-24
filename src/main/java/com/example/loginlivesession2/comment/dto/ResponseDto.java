@@ -12,6 +12,7 @@ public class ResponseDto<T> {
     private String massage;
 
     public static <T> ResponseDto<T> success(T data, String massage) {
+
         return new ResponseDto<>(true, data, massage);
     }
 

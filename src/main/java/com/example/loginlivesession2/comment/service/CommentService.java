@@ -5,11 +5,11 @@ import com.example.loginlivesession2.comment.dto.CommentRequestDto;
 import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.repository.CommentRepository;
+import com.example.loginlivesession2.exception.CustomException;
+import com.example.loginlivesession2.exception.ErrorCode;
 import com.example.loginlivesession2.post.entity.Post;
 import com.example.loginlivesession2.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -59,7 +59,7 @@ public class CommentService {
             CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
             return commentResponseDto;
         } else {
-            throw new IllegalArgumentException("Don't have access");
+            throw new CustomException(ErrorCode.NOT_FOUND_COMMWNTUSER);
         }
 
     }
@@ -72,8 +72,9 @@ public class CommentService {
 
         if (comment.getAccount().getUsername().equals(currentAccount.getUsername())) {
             commentRepository.deleteById(commentId);
+            StringBuilder r = new StringBuilder();
         } else {
-            throw new IllegalArgumentException("Don't have access");
+            throw new CustomException(ErrorCode.NOT_FOUND_COMMWNTUSER);
         }
 
     }
@@ -81,7 +82,7 @@ public class CommentService {
     // 댓글 있는지 확인하는 메소드
     public Comment commentCheck(Long commentId){
         return commentRepository.findById(commentId).orElseThrow(
-                () -> new IllegalArgumentException("댓글을 찾을 수 없습니다")
+                () -> new CustomException(ErrorCode.NOT_FOUND_COMMENT)
         );
     }
 

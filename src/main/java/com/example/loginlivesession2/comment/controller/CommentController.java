@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,18 +22,18 @@ public class CommentController {
 
     // 댓글 등록
     @PostMapping("/{postId}")
-    public ResponseDto<?> createComment(@RequestBody CommentRequestDto commentRequestDto,
-                                     @PathVariable Long postId,
-                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(commentService.create(commentRequestDto, postId, userDetails.getAccount()), "댓글 달기 성공");
+    public ResponseDto<?> createComment(@RequestBody @Valid CommentRequestDto commentRequestDto,
+                                         @PathVariable Long postId,
+                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(commentService.create(commentRequestDto, postId, userDetails.getAccount()), "등록 성공");
     }
 
 
     // 댓글 수정
     @PutMapping("/{commentId}")
-    public ResponseDto<?> updateComment(@RequestBody CommentRequestDto commentRequestDto,
-                                            @PathVariable Long commentId,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseDto<?> updateComment(@RequestBody @Valid CommentRequestDto commentRequestDto,
+                                        @PathVariable Long commentId,
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseDto.success(commentService.update(commentRequestDto, commentId, userDetails.getAccount()), "수정 성공");
     }
 
