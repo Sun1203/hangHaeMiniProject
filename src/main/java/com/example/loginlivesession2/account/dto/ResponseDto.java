@@ -1,4 +1,4 @@
-package com.example.loginlivesession2.heart.dto;
+package com.example.loginlivesession2.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
