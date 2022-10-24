@@ -24,20 +24,36 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final AccountRepository accountRepository;
+    private final HeartRepository heartRepository;
 
-    public List<PostResponseDto> getCategoryPost(String category) {
-        var posts = postRepository.findAllByCategory(category);
-        var postResponseDtos = new ArrayList<PostResponseDto>();
-        for (Post post : posts) {
-            postResponseDtos.add(new PostResponseDto(post));
+
+    public List<CategoryPostResponseDto> getCategoryPost(String category) {
+        // 로그인을 하지 않으면 조회못함.
+         class PostComparator implements Comparator<Post> {
+            @Override
+            public int compare(Post a,Post b){
+                if(a.getHeart().size()<b.getHeart().size()) return 1;
+                if(a.getHeart().size()>b.getHeart().size()) return -1;
+                return 0;
+            }
         }
-        return postResponseDtos;
+        var posts = postRepository.findAllByCategory(category);
+        Collections.sort(posts, new PostComparator());
+        var categoryPostResponseDtos = new ArrayList<CategoryPostResponseDto>();
+
+
+        for (Post post : posts) {
+            Long heart = heartRepository.countByPost(post);
+            categoryPostResponseDtos.add(new CategoryPostResponseDto(post, heart));
+        }
+        return categoryPostResponseDtos;
     }
 
-//    public ResponseDto<List<PostResponseDto>> getToonPost() {
-//
-//    }
-
+    public PostResponseDto getOnePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
+        Long heart = heartRepository.countByPost(post);
+        return new PostResponseDto(post, heart);
+    }
 
     public PostResponseDto post(PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
         Account account = userDetails.getAccount();
@@ -46,10 +62,6 @@ public class PostService {
         return new PostResponseDto(post);
     }
 
-    public PostResponseDto getOnePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        return new PostResponseDto(post);
-    }
 
     @Transactional
     public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto, UserDetailsImpl userDetails) {

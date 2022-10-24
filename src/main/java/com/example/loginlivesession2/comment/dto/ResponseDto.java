@@ -6,12 +6,12 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ResponseDto<T> {
-    private boolean success;
+    private boolean ok;
     private T data;
-    private Error error;
+    private String message;
 
-    public static <T> ResponseDto<T> success(T data) {
-        return new ResponseDto<>(true, data, null);
+    public static <T> ResponseDto<T> success(T data, String message) {
+        return new ResponseDto<>(true, data, message);
     }
 //public static <T> ResponseDto<T> success(T data) {
 //        return new ResponseDto<>(true, data, null);

@@ -40,7 +40,7 @@ public class HeartService {
         return ResponseDto.success("좋아요 성공");
 
     }
-
+    @Transactional
     public ResponseDto deleteHeart(UserDetailsImpl userDetails, Long postId) {
 
         // 회원 정보

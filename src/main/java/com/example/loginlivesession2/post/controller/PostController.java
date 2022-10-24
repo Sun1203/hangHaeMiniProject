@@ -1,5 +1,6 @@
 package com.example.loginlivesession2.post.controller;
 
+import com.example.loginlivesession2.post.dto.CategoryPostResponseDto;
 import com.example.loginlivesession2.post.dto.PostRequestDto;
 import com.example.loginlivesession2.post.dto.PostResponseDto;
 import com.example.loginlivesession2.post.dto.ResponseDto;
@@ -24,13 +25,12 @@ public class PostController {
     }
 
     @GetMapping("/post/{category}")
-    public ResponseDto<List<PostResponseDto>> getCategoryPost(@PathVariable("category") String category) {
-        System.out.println(category);
+    public ResponseDto<List<CategoryPostResponseDto>> getCategoryPost(@PathVariable("category") String category) {
         return ResponseDto.success(postService.getCategoryPost(category), "등록 성공");
     }
 
 
-    @GetMapping("/post/{postId}")
+    @GetMapping("/post/detail/{postId}")
     public ResponseDto<PostResponseDto> getOnePost(@PathVariable Long postId) {
         return ResponseDto.success(postService.getOnePost(postId), "조회 성공");
     }
