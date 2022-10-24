@@ -14,11 +14,13 @@ import com.example.loginlivesession2.jwt.dto.TokenDto;
 import com.example.loginlivesession2.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,8 +82,14 @@ public class AccountService {
         return ResponseDto.success("로그인 성공");
     }
 
+    public ResponseEntity<List<Account>> getAccount() {
+        List<Account> account = accountRepository.findAll();
+        return ResponseEntity.ok(account);
+    }
+
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
         response.addHeader(JwtUtil.ACCESS_TOKEN, tokenDto.getAccessToken());
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
     }
+
 }
