@@ -1,7 +1,6 @@
 package com.example.loginlivesession2.comment.dto;
 
 
-import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

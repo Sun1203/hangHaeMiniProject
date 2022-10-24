@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -72,7 +70,7 @@ public class CommentService {
 
         if (comment.getAccount().getUsername().equals(currentAccount.getUsername())) {
             commentRepository.deleteById(commentId);
-            StringBuilder r = new StringBuilder();
+
         } else {
             throw new CustomException(ErrorCode.NOT_FOUND_COMMWNTUSER);
         }

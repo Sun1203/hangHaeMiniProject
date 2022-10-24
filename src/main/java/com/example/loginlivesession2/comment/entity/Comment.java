@@ -3,7 +3,6 @@ package com.example.loginlivesession2.comment.entity;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.dto.CommentRequestDto;
-import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -40,10 +39,6 @@ public class Comment {
     @JsonIgnore
     private Account account;
 
-    public Comment(CommentRequestDto commentRequestDto, Account account) {
-        this.content = commentRequestDto.getContent();
-        this.account = account;
-    }
 
     public Comment(CommentRequestDto commentRequestDto, Account account, Post post) {
         this.content = commentRequestDto.getContent();

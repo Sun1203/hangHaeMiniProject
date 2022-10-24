@@ -1,9 +1,7 @@
 package com.example.loginlivesession2.comment.controller;
 
 import com.example.loginlivesession2.comment.dto.CommentRequestDto;
-import com.example.loginlivesession2.comment.dto.CommentResponseDto;
 import com.example.loginlivesession2.comment.dto.ResponseDto;
-import com.example.loginlivesession2.comment.entity.Comment;
 import com.example.loginlivesession2.comment.service.CommentService;
 import com.example.loginlivesession2.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
