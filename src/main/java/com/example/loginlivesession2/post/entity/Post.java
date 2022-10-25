@@ -39,9 +39,13 @@ public class Post {
     @Column(nullable = false)
     private String content;
 
+//    private Long heartCount;
 
-//    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-//    private List<Comment> comment = new ArrayList<>();
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Heart> heart;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comment;
 
     public Post(PostRequestDto postRequestDto, Account account){
         this.account = account;

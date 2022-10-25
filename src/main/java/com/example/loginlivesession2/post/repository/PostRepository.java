@@ -1,5 +1,6 @@
 package com.example.loginlivesession2.post.repository;
 
+import com.example.loginlivesession2.heart.entity.Heart;
 import com.example.loginlivesession2.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 

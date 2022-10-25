@@ -9,5 +9,4 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     Long countByPost(Post post);
     Boolean existsByAccountAndPost(Account account, Post post);
     Integer deleteByAccountAndPost(Account account, Post post);
-
 }
