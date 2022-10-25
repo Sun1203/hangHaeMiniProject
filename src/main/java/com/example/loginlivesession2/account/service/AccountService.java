@@ -2,6 +2,7 @@ package com.example.loginlivesession2.account.service;
 
 import com.example.loginlivesession2.account.dto.AccountRequestDto;
 import com.example.loginlivesession2.account.dto.LoginRequestDto;
+import com.example.loginlivesession2.account.dto.OverlapRequestDto;
 import com.example.loginlivesession2.account.dto.ResponseDto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.entity.RefreshToken;
@@ -83,6 +84,17 @@ public class AccountService {
     public ResponseEntity<List<Account>> getAccount() {
         List<Account> account = accountRepository.findAll();
         return ResponseEntity.ok(account);
+    }
+
+
+    @Transactional
+    public ResponseDto idOverlap(OverlapRequestDto loginId) {
+        // 아이디 체크
+        Account account = accountRepository.findByLoginId(loginId.getLoginId()).orElse(null);
+        if (account == null)
+            return ResponseDto.success("사용 가능한 아이디");
+
+        throw new CustomException(ErrorCode.OVERLAP_LOGINID);
     }
 
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
