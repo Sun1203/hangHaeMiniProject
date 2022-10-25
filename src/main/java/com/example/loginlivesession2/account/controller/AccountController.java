@@ -2,6 +2,7 @@ package com.example.loginlivesession2.account.controller;
 
 import com.example.loginlivesession2.account.dto.AccountRequestDto;
 import com.example.loginlivesession2.account.dto.LoginRequestDto;
+import com.example.loginlivesession2.account.dto.OverlapRequestDto;
 import com.example.loginlivesession2.account.dto.ResponseDto;
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.account.service.AccountService;
@@ -40,6 +41,11 @@ public class AccountController {
     @GetMapping("/account")
     public ResponseEntity<List<Account>> getAccount() {
         return accountService.getAccount();
+    }
+
+    @PostMapping("/signup/overlap")
+    public ResponseDto idOverlap(@RequestBody OverlapRequestDto loginId) {
+        return accountService.idOverlap(loginId);
     }
 
     @GetMapping("/api/issue/token")
