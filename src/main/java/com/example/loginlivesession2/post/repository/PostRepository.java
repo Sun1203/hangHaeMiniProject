@@ -10,7 +10,4 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository <Post, Long> {
     List<Post> findAll();
     List<Post> findAllByCategory(String category);
-//    List<Post> findAllByCategoryOrderByHeartCount(String category);
-
-
 }
