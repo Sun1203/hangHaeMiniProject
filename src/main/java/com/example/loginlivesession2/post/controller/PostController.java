@@ -21,18 +21,21 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseDto<PostResponseDto> Post(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(postService.post(postRequestDto, userDetails), "등록 성공");
+        return ResponseDto.success(postService.post(postRequestDto, userDetails), "등록 완료");
     }
 
     @GetMapping("/post/{category}")
     public ResponseDto<List<CategoryPostResponseDto>> getCategoryPost(@PathVariable("category") String category) {
-        return ResponseDto.success(postService.getCategoryPost(category), "등록 성공");
+        if(postService.getCategoryPost(category).size()==0){
+            return ResponseDto.success(postService.getCategoryPost(category), "게시글이 없습니다");
+        }
+        return ResponseDto.success(postService.getCategoryPost(category), "조회 완료");
     }
 
 
     @GetMapping("/post/detail/{postId}")
     public ResponseDto<PostResponseDto> getOnePost(@PathVariable Long postId) {
-        return ResponseDto.success(postService.getOnePost(postId), "조회 성공");
+        return ResponseDto.success(postService.getOnePost(postId), "조회 완료");
     }
 
     @PutMapping("/post/{postId}")
@@ -42,6 +45,6 @@ public class PostController {
 
     @DeleteMapping("/post/{postId}")
     public ResponseDto<String> deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(postService.deletePost(postId, userDetails), "삭제 성공");
+        return ResponseDto.success(postService.deletePost(postId, userDetails), "삭제 완료");
     }
 }
