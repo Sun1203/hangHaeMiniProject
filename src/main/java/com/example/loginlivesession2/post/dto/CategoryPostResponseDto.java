@@ -11,14 +11,12 @@ public class CategoryPostResponseDto {
         private String category;
         private String image;
         private String content;
-        private Long heart;
 
-        public CategoryPostResponseDto(Post post, Long heart) {
+        public CategoryPostResponseDto(Post post) {
                 this.username = post.getAccount().getUsername();
                 this.title = post.getTitle();
                 this.category = post.getCategory();
                 this.image = post.getImage();
                 this.content = post.getContent();
-                this.heart = heart;
         }
 }

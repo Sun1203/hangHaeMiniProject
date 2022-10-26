@@ -17,8 +17,11 @@ public enum ErrorCode {
 
 
     // Heart
-    NOT_FOUND_POST(HttpStatus.NOT_FOUND.value(), "H001", "해당 게시글을 찾을 수 없습니다"),
-    NOT_OVERLAP_HEART(HttpStatus.BAD_REQUEST.value(), "H002", "좋아요는 한번만 가능합니다")
+    NOT_OVERLAP_HEART(HttpStatus.BAD_REQUEST.value(), "H002", "좋아요는 한번만 가능합니다"),
+
+    //Post
+    NOT_FOUND_ONEPOST(HttpStatus.NOT_FOUND.value(), "P001", "해당 게시글을 찾을 수 없습니다"),
+    NOT_MATCHED_WRITER(HttpStatus.BAD_REQUEST.value(), "P002", "해당 게시글 작성자가 아닙니다"),
 
     ;
     private final int httpStatus;

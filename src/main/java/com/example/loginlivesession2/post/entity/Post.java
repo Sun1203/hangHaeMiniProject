@@ -2,16 +2,12 @@ package com.example.loginlivesession2.post.entity;
 
 import com.example.loginlivesession2.account.entity.Account;
 import com.example.loginlivesession2.comment.entity.Comment;
-import com.example.loginlivesession2.heart.entity.Heart;
 import com.example.loginlivesession2.post.dto.PostRequestDto;
-import com.example.loginlivesession2.post.dto.PostResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,8 +37,6 @@ public class Post {
 
 //    private Long heartCount;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Heart> heart;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Comment> comment;
