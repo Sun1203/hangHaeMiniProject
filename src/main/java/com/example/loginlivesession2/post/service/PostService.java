@@ -33,11 +33,11 @@ public class PostService {
         for (Post post : posts) {
             categoryPostResponseDtos.add(new CategoryPostResponseDto(post));
         }
-        return categoryPostResponseDtos;
+            return categoryPostResponseDtos;
     }
 
     public PostResponseDto getOnePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ONEPOST));
         return new PostResponseDto(post);
     }
 
@@ -51,24 +51,24 @@ public class PostService {
 
     @Transactional
     public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ONEPOST));
         Long userId = userDetails.getAccount().getAccountId();
         if (post.getAccount().getAccountId().equals(userId)) {
             post.update(postRequestDto);
             return new PostResponseDto(post);
         } else {
-            throw new RuntimeException("작성자만 수정 가능합니다.");
+            throw new CustomException(ErrorCode.NOT_MATCHED_WRITER);
         }
     }
 
     public String deletePost(Long postId, UserDetailsImpl userDetails) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ONEPOST));
         Long userId = userDetails.getAccount().getAccountId();
         if (post.getAccount().getAccountId().equals(userId)) {
             postRepository.deleteById(userId);
-            return "삭제 완료";
+            return "";
         } else {
-            throw new RuntimeException("작성자만 삭제 가능합니다.");
+            throw new CustomException(ErrorCode.NOT_MATCHED_WRITER);
         }
     }
 }
