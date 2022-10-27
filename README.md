@@ -10,6 +10,7 @@
 | 임효진 | FE  |
 | 조민지 | FE  |
 
+
 ## 📫 프로젝트 소개
 <img width="600" alt="스크린샷 2022-10-27 16 06 11" src="https://user-images.githubusercontent.com/86904667/198214534-3e3c77fc-d9fd-42e4-8f68-813dff3e4f74.png">
 
@@ -18,13 +19,14 @@
 * **백엔드**
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=SpringSecurity&logoColor=white"/> <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=JWT&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
 
+
 * **프론트엔드**
 [프론트엔드 깃허브로 이동하기] : https://github.com/minzzjo/HanghaeW6
 
 
 
 
-##✨핵심기능 ✨  
+## ✨핵심기능 ✨  
 ```
 1. 회원가입 / 로그
 JWT Token 인증 방식으로 로그인 구현
