@@ -45,7 +45,6 @@ public class AccountService {
 
         accountRepository.save(account);
         return ResponseDto.success("회원가입 성공");
-//        return new GlobalResDto("Success signup", HttpStatus.OK.value());
     }
 
     @Transactional

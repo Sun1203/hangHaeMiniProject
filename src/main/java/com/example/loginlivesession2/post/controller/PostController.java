@@ -39,12 +39,16 @@ public class PostController {
     }
 
     @PutMapping("/post/{postId}")
-    public ResponseDto<PostResponseDto> updatePost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseDto<PostResponseDto> updatePost(@PathVariable Long postId,
+                                                   @RequestBody PostRequestDto postRequestDto,
+                                                   @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseDto.success(postService.updatePost(postId, postRequestDto, userDetails), "수정 완료");
     }
 
     @DeleteMapping("/post/{postId}")
-    public ResponseDto<String> deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseDto<String> deletePost(@PathVariable Long postId,
+                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println("삭제요청");
         return ResponseDto.success(postService.deletePost(postId, userDetails), "삭제 완료");
     }
 }
