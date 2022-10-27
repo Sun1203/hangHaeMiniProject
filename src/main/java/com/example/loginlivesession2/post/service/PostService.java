@@ -61,15 +61,23 @@ public class PostService {
         }
     }
 
+    @Transactional
     public String deletePost(Long postId, UserDetailsImpl userDetails) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ONEPOST));
         Long userId = userDetails.getAccount().getAccountId();
         if (post.getAccount().getAccountId().equals(userId)) {
-            postRepository.deleteById(userId);
+            postRepository.deleteById(postId);
             return "";
         } else {
             throw new CustomException(ErrorCode.NOT_MATCHED_WRITER);
         }
     }
 }
+
+
+
+
+
+
+
 

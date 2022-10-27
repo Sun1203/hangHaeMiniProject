@@ -37,15 +37,6 @@ public class CommentService {
         return commentResponseDto;
     }
 
-
-    // 댓글 전체 조회
-//    @Transactional
-//    public List<Comment> getAllComment() {
-//
-//        return commentRepository.findAllByOrderByCreatedAtDesc();
-//    }
-
-
     // 댓글 수정
     @Transactional
     public CommentResponseDto update(CommentRequestDto commentRequestDto, Long commentId, Account account) {

@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 public class CategoryPostResponseDto {
 
+
+        private Long postId;
         private String username;
         private String title;
         private String category;
@@ -13,6 +15,7 @@ public class CategoryPostResponseDto {
         private String content;
 
         public CategoryPostResponseDto(Post post) {
+                this.postId = post.getPostId();
                 this.username = post.getAccount().getUsername();
                 this.title = post.getTitle();
                 this.category = post.getCategory();

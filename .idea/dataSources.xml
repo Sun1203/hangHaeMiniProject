@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bii-springboot-database" uuid="a8b5156d-6d27-40e5-ad68-0d6b40dee1d2">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://bii-springboot-database.caxoy99zrlqo.ap-northeast-2.rds.amazonaws.com:3306/myselectbii</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="springboot-database" uuid="69eb9ef8-aca7-4ff3-9ff8-2740b99de5d4">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>

@@ -42,13 +42,4 @@ public class CommentController {
         commentService.delete(commentId, userDetails.getAccount());
         return ResponseDto.success("", "삭제 성공");
     }
-
-
-
-
-    //    // 댓글 전체 조회(API 테이블에는 나와있지 않음)
-//    @GetMapping("/")
-//    public List<Comment> getAllComment() {
-//        return commentService.getAllComment();
-//    }
 }

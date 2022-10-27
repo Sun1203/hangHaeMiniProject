@@ -19,11 +19,5 @@ public class ResponseDto<T> {
     public static <T> ResponseDto<T> success(String massage) {
         return new ResponseDto<>();
     }
-//
-//    @Getter
-//    @AllArgsConstructor
-//    static class Error {
-//        private String code;
-//        private String message;
-//    }
+
 }

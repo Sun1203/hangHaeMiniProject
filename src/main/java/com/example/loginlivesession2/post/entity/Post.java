@@ -29,13 +29,12 @@ public class Post {
     @Column(nullable = false)
     private String category;
 
+    @Lob
     @Column(nullable = false)
     private String image;
 
     @Column(nullable = false)
     private String content;
-
-//    private Long heartCount;
 
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -50,9 +49,6 @@ public class Post {
     }
 
     public void update(PostRequestDto postRequestDto) {
-        this.title = postRequestDto.getTitle();
-        this.category = postRequestDto.getCategory();
-        this.image = postRequestDto.getImage();
         this.content = postRequestDto.getContent();
     }
 }
