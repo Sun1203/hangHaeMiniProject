@@ -42,6 +42,7 @@ JWT Token 인증 방식으로 로그인 구현
 
 
 ## 🎥 데모영상
+https://youtu.be/jw5gibObTC8
 
 
 ## ⚽ 트러블 슈팅
